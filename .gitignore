@@ -1,0 +1,10 @@
+# Локальные настройки Claude Code
+.claude/settings.local.json
+
+# Служебные файлы Windows
+Thumbs.db
+desktop.ini
+
+# Vercel
+.vercel
+.env*
