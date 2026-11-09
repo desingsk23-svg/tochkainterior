@@ -17,7 +17,7 @@ Write-Host "Serving $root at http://localhost:$Port/"
 while ($listener.IsListening) {
   $ctx = $listener.GetContext()
   $path = [Uri]::UnescapeDataString($ctx.Request.Url.AbsolutePath).TrimStart('/')
-  if ($path -eq '') { $path = 'page43517438.html' }
+  if ($path -eq '') { $path = if (Test-Path (Join-Path $root 'index.html')) { 'index.html' } else { 'page43517438.html' } }
   if ($path -eq 'politica' -or $path -eq 'politica/') { $path = 'page125438226.html' }
   $file = Join-Path $root $path
   $res = $ctx.Response

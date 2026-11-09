@@ -1,7 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/", "destination": "/page43517438.html" },
     { "source": "/politica", "destination": "/page125438226.html" },
     { "source": "/politica/", "destination": "/page125438226.html" }
   ]

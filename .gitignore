@@ -8,3 +8,6 @@ desktop.ini
 # Vercel
 .vercel
 .env*
+
+# Исходники для генерации видео (не публикуем)
+_video/

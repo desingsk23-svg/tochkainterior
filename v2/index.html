@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Студия дизайна интерьера «Точка»</title>
+  <meta name="description" content="Студия «Точка» разрабатывает современные дизайн-проекты квартир и домов. Планировки, 3D-визуализация, подбор материалов и авторское сопровождение.">
+  <meta name="theme-color" content="#f4f1ec">
+  <link rel="icon" href="images/tild6365-6431-4133-b139-353439316331__vector.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="preload" as="image" href="images/tild3935-3861-4865-b239-653362353735__005.jpg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    // Прелоадер показываем только когда есть JS. Страховка: что бы ни случилось со скриптами,
+    // через 6 с сайт откроется сам — не висеть дольше.
+    document.documentElement.classList.add('js', 'is-loading');
+    setTimeout(function () { document.documentElement.classList.remove('is-loading'); }, 6000);
+  </script>
+</head>
+<body>
+
+  <!-- Прелоадер: логотип заливается по ходу загрузки первого экрана, потом падает точка и шторка уходит вверх -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__mark">
+      <img class="preloader__dim" src="images/tild6166-3066-4637-a137-303936363762__photo.svg" alt="" width="160" height="62">
+      <div class="preloader__fill" id="preloaderFill"></div>
+    </div>
+  </div>
+
+  <!-- Шапка: прозрачная над первым экраном, при прокрутке становится светлой -->
+  <header class="header" id="header">
+    <a class="header__logo" href="#top" aria-label="Точка — на главную">
+      <img src="images/tild6166-3066-4637-a137-303936363762__photo.svg" alt="Точка. Студия дизайна" width="160" height="62">
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Основное меню">
+      <a href="#about">О нас</a>
+      <a href="#services">Услуги</a>
+      <a href="#portfolio">Проекты</a>
+      <a href="#stages">Этапы работы</a>
+      <a href="#reviews">Отзывы</a>
+      <a class="nav__phone" href="tel:+79537054178">+7 953 705 41 78</a>
+    </nav>
+
+    <a class="btn btn--ghost header__cta" href="#order">Обсудить проект</a>
+
+    <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <main id="top">
+
+    <!-- 1. Первый экран -->
+    <section class="hero" aria-label="Первый экран">
+      <div class="hero__media">
+        <!-- Когда будет видео: добавить <source src="video/hero.mp4" type="video/mp4"> внутрь <video>. До этого показывается фото (poster). -->
+        <video class="hero__video" autoplay muted loop playsinline preload="metadata"
+               poster="images/tild3935-3861-4865-b239-653362353735__005.jpg"></video>
+      </div>
+
+      <div class="hero__content">
+        <p class="hero__kicker reveal">Студия дизайна интерьера</p>
+        <h1 class="hero__title reveal">Сделаем красиво<br>и&nbsp;удобно<span class="dot" aria-hidden="true"></span></h1>
+        <p class="hero__lead reveal">Переложите свои заботы на&nbsp;нас: продумаем каждую деталь, от&nbsp;розеток до&nbsp;ручек на&nbsp;шкафчиках.</p>
+        <div class="hero__actions reveal">
+          <a class="btn btn--accent" href="#order">Обсудить проект</a>
+          <a class="btn btn--link" href="#portfolio">Смотреть проекты <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <div class="hero__bottom">
+        <p class="hero__fact"><b>с 2016</b> года создаём дизайн-проекты квартир и домов</p>
+        <a class="hero__scroll" href="#about" aria-label="Прокрутить вниз"><span></span></a>
+      </div>
+    </section>
+
+    <!-- 2. Портфолио: заголовок слева, по скроллу справа въезжает лента крупных карточек.
+         На телефоне и планшете — обычная лента, листается пальцем. -->
+    <section class="portfolio" id="portfolio" aria-labelledby="portfolio-title">
+      <div class="portfolio__stage">
+        <div class="portfolio__head">
+          <p class="label">Портфолио</p>
+          <h2 class="h2" id="portfolio-title">Шесть проектов — <br>шесть характеров<span class="dot" aria-hidden="true"></span></h2>
+          <p class="portfolio__para">Каждый проект начинается с&nbsp;людей, которые будут в&nbsp;нём жить. Нажмите на&nbsp;карточку, чтобы посмотреть проект целиком.</p>
+        </div>
+        <div class="portfolio__counter" aria-hidden="true"><span id="pfCurrent">01</span> / 06</div>
+
+        <div class="portfolio__track" id="pfTrack">
+          <button class="pcard pcard--tall" type="button" data-project="0">
+            <span class="pcard__img"><img src="images/tild3738-6264-4032-b563-323865393137__-17.jpg" alt="Проект «Синий»: гостиная с синей стеной и бежевым диваном" loading="lazy"></span>
+            <span class="pcard__body">
+              <span class="pcard__num">01</span>
+              <span class="pcard__name">Синий</span>
+              <span class="pcard__tags">сочный синий цвет · гипсовые 3D-панели · роскошный диван</span>
+              <span class="pcard__more">Смотреть проект <i aria-hidden="true">→</i></span>
+            </span>
+          </button>
+          <button class="pcard pcard--wide" type="button" data-project="1">
+            <span class="pcard__img"><img src="images/tild3066-6366-4564-b262-386338623232__001.jpg" alt="Проект «Золотой»: гостиная-кухня с хрустальной люстрой" loading="lazy"></span>
+            <span class="pcard__body">
+              <span class="pcard__num">02</span>
+              <span class="pcard__name">Золотой</span>
+              <span class="pcard__tags">спокойный бежевый · камин · хрусталь · намёк на классику</span>
+              <span class="pcard__more">Смотреть проект <i aria-hidden="true">→</i></span>
+            </span>
+          </button>
+          <button class="pcard pcard--tall" type="button" data-project="2">
+            <span class="pcard__img"><img src="images/tild6262-3334-4663-b637-616434363839__10.jpg" alt="Проект «Бежевый»: столовая с магнитными треками" loading="lazy"></span>
+            <span class="pcard__body">
+              <span class="pcard__num">03</span>
+              <span class="pcard__name">Бежевый</span>
+              <span class="pcard__tags">травертин · магнитные треки · светлое дерево</span>
+              <span class="pcard__more">Смотреть проект <i aria-hidden="true">→</i></span>
+            </span>
+          </button>
+          <button class="pcard pcard--wide" type="button" data-project="3">
+            <span class="pcard__img"><img src="images/tild3833-3437-4032-b865-633037343931__004-02.jpg" alt="Проект «Серый»: гостиная в серых тонах с теневым потолком" loading="lazy"></span>
+            <span class="pcard__body">
+              <span class="pcard__num">04</span>
+              <span class="pcard__name">Серый</span>
+              <span class="pcard__tags">теневой потолок · щелевой диффузор · серый, серый, серый</span>
+              <span class="pcard__more">Смотреть проект <i aria-hidden="true">→</i></span>
+            </span>
+          </button>
+          <button class="pcard pcard--tall" type="button" data-project="4">
+            <span class="pcard__img"><img src="images/tild6232-3331-4335-b361-333839336439__003.jpg" alt="Проект «Белый»: светлая кухня-столовая" loading="lazy"></span>
+            <span class="pcard__body">
+              <span class="pcard__num">05</span>
+              <span class="pcard__name">Белый</span>
+              <span class="pcard__tags">молодость · воздух · минимализм · кабинет на&nbsp;балконе</span>
+              <span class="pcard__more">Смотреть проект <i aria-hidden="true">→</i></span>
+            </span>
+          </button>
+          <button class="pcard pcard--wide" type="button" data-project="5">
+            <span class="pcard__img"><img src="images/tild3536-6566-4634-b261-316233653166__006.jpg" alt="Проект «Цветной»: гостиная с коралловым диваном и зелёной стеной" loading="lazy"></span>
+            <span class="pcard__body">
+              <span class="pcard__num">06</span>
+              <span class="pcard__name">Цветной</span>
+              <span class="pcard__tags">цвет · свет · пара подростков · вечера на&nbsp;террасе</span>
+              <span class="pcard__more">Смотреть проект <i aria-hidden="true">→</i></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Этапы работы: степпер. Слева крупная цифра шага, в центре кадр в арке меняется шторкой снизу,
+         справа список всех шагов с линией прогресса. На телефоне — вертикальный таймлайн. -->
+    <section class="stages" id="stages" aria-labelledby="stages-title">
+      <div class="stages__stage">
+        <div class="stages__left">
+          <p class="label">Порядок работы</p>
+          <h2 class="h2" id="stages-title">Восемь шагов <br>до&nbsp;готового проекта<span class="dot" aria-hidden="true"></span></h2>
+          <div class="stages__bigs">
+            <div class="sbig"><b>01</b><p class="sbig__t">Знакомство</p><p class="sbig__d">Выбираем время для встречи и&nbsp;обмениваемся ожиданиями от&nbsp;дальнейшей работы.</p></div>
+            <div class="sbig"><b>02</b><p class="sbig__t">Обмер</p><p class="sbig__d">Выезжаем на&nbsp;объект, снимаем размеры и&nbsp;чертим подробный обмерный план — он станет основой для дальнейшего проектирования.</p></div>
+            <div class="sbig"><b>03</b><p class="sbig__t">Сбор информации</p><p class="sbig__d">Зададим тысячу вопросов о&nbsp;том, что вам нравится и&nbsp;чего хочется.</p></div>
+            <div class="sbig"><b>04</b><p class="sbig__t">Планировочное решение</p><p class="sbig__d">Собираем 2–3 варианта планировки на&nbsp;основе ваших пожеланий, нашей фантазии и&nbsp;здравого смысла.</p></div>
+            <div class="sbig"><b>05</b><p class="sbig__t">Концепция</p><p class="sbig__d">Создаём коллажи, на&nbsp;которых понятно цветовое и&nbsp;стилистическое решение.</p></div>
+            <div class="sbig"><b>06</b><p class="sbig__t">Визуализация</p><p class="sbig__d">Создаём фотореалистичные изображения будущего интерьера.</p></div>
+            <div class="sbig"><b>07</b><p class="sbig__t">Проектная документация</p><p class="sbig__d">Готовим комплект чертежей, подробно описывающий поставленную перед нами задачу.</p></div>
+            <div class="sbig"><b>08</b><p class="sbig__t">Спецификация</p><p class="sbig__d">Перечисляем и&nbsp;считаем все чистовые отделочные материалы и&nbsp;мебель.</p></div>
+          </div>
+        </div>
+
+        <div class="stages__visual" aria-hidden="true">
+          <div class="sshot"><img src="images/tild3366-3035-4233-b265-376662303364__001.jpg" alt="" loading="lazy"></div>
+          <div class="sshot"><img src="images/tild3762-3664-4733-a231-636638396138__001-02.jpg" alt="" loading="lazy"></div>
+          <div class="sshot"><img src="images/tild3161-3330-4064-b563-653165366337__01.jpg" alt="" loading="lazy"></div>
+          <div class="sshot"><img src="images/tild3139-6330-4639-b938-636232393364__001.jpg" alt="" loading="lazy"></div>
+          <div class="sshot"><img src="images/tild3462-3135-4561-a333-313137623339__001.jpg" alt="" loading="lazy"></div>
+          <div class="sshot"><img src="images/tild6161-3364-4661-b630-656662336565__-14_.jpg" alt="" loading="lazy"></div>
+          <div class="sshot"><img src="images/tild3361-3639-4132-b865-363663346437__005.jpg" alt="" loading="lazy"></div>
+          <div class="sshot"><img src="images/tild6465-3930-4333-a336-313631653665__008-02.jpg" alt="" loading="lazy"></div>
+        </div>
+
+        <ol class="stages__list">
+          <li class="stages__rail" aria-hidden="true"><span id="stagesBar"></span></li>
+          <li class="sitem"><span>01</span>Знакомство</li>
+          <li class="sitem"><span>02</span>Обмер</li>
+          <li class="sitem"><span>03</span>Сбор информации</li>
+          <li class="sitem"><span>04</span>Планировка</li>
+          <li class="sitem"><span>05</span>Концепция</li>
+          <li class="sitem"><span>06</span>Визуализация</li>
+          <li class="sitem"><span>07</span>Документация</li>
+          <li class="sitem"><span>08</span>Спецификация</li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Окно проекта: галерея на весь экран -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lbTitle" hidden>
+    <div class="lightbox__top">
+      <p class="lightbox__title"><span id="lbTitle"></span> <span class="lightbox__count" id="lbCount"></span></p>
+      <p class="lightbox__tags" id="lbTags"></p>
+      <button class="lightbox__close" id="lbClose" type="button" aria-label="Закрыть">×</button>
+    </div>
+    <div class="lightbox__stage">
+      <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" type="button" aria-label="Предыдущее фото">←</button>
+      <img class="lightbox__img" id="lbImg" alt="">
+      <button class="lightbox__nav lightbox__nav--next" id="lbNext" type="button" aria-label="Следующее фото">→</button>
+    </div>
+    <div class="lightbox__thumbs" id="lbThumbs"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="assets/js/projects.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
