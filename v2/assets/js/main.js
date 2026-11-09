@@ -188,7 +188,8 @@ document.querySelectorAll('main > section:not(.hero) .reveal').forEach((el, i) =
   // Lenis только на мыши: на таче у системы своя инерция, поверх неё прокрутка становится вязкой
   const touch = window.matchMedia('(pointer: coarse)').matches;
   if (!touch && !reduce && window.Lenis) {
-    lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    // lerp вместо duration: страница догоняет колесо каждый кадр и сразу реагирует на смену направления
+    lenis = new Lenis({ lerp: 0.12, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));   // gsap.ticker отдаёт секунды
     gsap.ticker.lagSmoothing(0);
@@ -227,13 +228,16 @@ document.querySelectorAll('main > section:not(.hero) .reveal').forEach((el, i) =
     const endX = () => -(track.scrollWidth - window.innerWidth * 0.94);   // последняя карточка встаёт у правого края
     const dist = () => startX() - endX();
 
+    // Скролл уже сглажен Lenis, поэтому scrub короткий: двойное сглаживание давало «резину» и рывки
+    // при смене направления. anticipatePin не нужен — он подскакивал на границе закрепления.
+    let shownCard = 0;
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: pf, start: 'top top', end: () => '+=' + dist() * 1.1,
-        pin: stage, scrub: 1, invalidateOnRefresh: true, refreshPriority: 2, anticipatePin: 1,
+        pin: stage, scrub: 0.35, invalidateOnRefresh: true, refreshPriority: 2,
         onUpdate: (self) => {
           const i = Math.min(cards.length, Math.max(1, Math.round(self.progress * (cards.length - 1)) + 1));
-          counter.textContent = String(i).padStart(2, '0');
+          if (i !== shownCard) { shownCard = i; counter.textContent = String(i).padStart(2, '0'); }   // DOM трогаем только при смене
         },
       },
     });
@@ -248,7 +252,7 @@ document.querySelectorAll('main > section:not(.hero) .reveal').forEach((el, i) =
     });
     // Параллакс фото внутри карточки: картинка чуть отстаёт от рамки
     cards.forEach((c) => {
-      tl.fromTo(c.querySelector('img'), { xPercent: -7 }, { xPercent: 7, ease: 'none', duration: 1 }, 0);
+      tl.fromTo(c.querySelector('img'), { xPercent: -6, scale: 1.16 }, { xPercent: 6, scale: 1.16, ease: 'none', duration: 1 }, 0);
     });
 
     /* --- Этапы: степпер. Крупная цифра меняется, кадр в арке — шторкой снизу --- */
@@ -260,10 +264,13 @@ document.querySelectorAll('main > section:not(.hero) .reveal').forEach((el, i) =
     const N = bigs.length;
     gsap.set(bigs, { autoAlpha: 0, y: 50 });
     gsap.set(bigs[0], { autoAlpha: 1, y: 0 });
-    gsap.set(shots, { clipPath: 'inset(100% 0% 0% 0%)' });
-    gsap.set(shots[0], { clipPath: 'inset(0% 0% 0% 0%)' });
-    gsap.set(shots.map((s) => s.querySelector('img')), { scale: 1.18 });
-    gsap.set(shots[0].querySelector('img'), { scale: 1 });
+    // Шторка только на transform (дёшево): рамка кадра въезжает снизу, фото внутри едет навстречу,
+    // поэтому картинка стоит на месте, а «открывается» снизу вверх. Раньше было clip-path — перерисовка каждый кадр.
+    const shotImgs = shots.map((s) => s.querySelector('img'));
+    gsap.set(shots, { yPercent: 100 });
+    gsap.set(shotImgs, { yPercent: -100, scale: 1.12 });
+    gsap.set(shots[0], { yPercent: 0 });
+    gsap.set(shotImgs[0], { yPercent: 0, scale: 1 });
     let current = -1;
     const mark = (i) => {
       if (i === current) return;
@@ -275,7 +282,7 @@ document.querySelectorAll('main > section:not(.hero) .reveal').forEach((el, i) =
     const stl = gsap.timeline({
       scrollTrigger: {
         trigger: st, start: 'top top', end: () => '+=' + window.innerHeight * N * 0.6,
-        pin: st.querySelector('.stages__stage'), scrub: 1, invalidateOnRefresh: true, refreshPriority: 1, anticipatePin: 1,
+        pin: st.querySelector('.stages__stage'), scrub: 0.35, invalidateOnRefresh: true, refreshPriority: 1,
         // Активный пункт считаем от прогресса, а не set()-ами в таймлайне: те не откатываются при скролле вверх
         onUpdate: (self) => mark(Math.min(N - 1, Math.floor(self.progress * N))),
       },
@@ -284,8 +291,9 @@ document.querySelectorAll('main > section:not(.hero) .reveal').forEach((el, i) =
       const at = i / N;
       stl.to(bigs[i - 1], { autoAlpha: 0, y: -50, duration: 0.05 }, at - 0.04)
         .to(bigs[i], { autoAlpha: 1, y: 0, duration: 0.06 }, at)
-        .to(shots[i], { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.08, ease: 'power2.inOut' }, at - 0.03)
-        .to(shots[i].querySelector('img'), { scale: 1, duration: 0.14, ease: 'power2.out' }, at - 0.03);
+        .to(shots[i], { yPercent: 0, duration: 0.08, ease: 'power2.inOut' }, at - 0.03)
+        .to(shotImgs[i], { yPercent: 0, duration: 0.08, ease: 'power2.inOut' }, at - 0.03)
+        .to(shotImgs[i], { scale: 1, duration: 0.12, ease: 'power2.out' }, at - 0.03);
     }
     stl.to({}, { duration: 0.04 });
 

@@ -57,12 +57,13 @@ h1, h2, h3, p { margin: 0; }
   height: var(--header-h);
   display: flex; align-items: center; gap: 32px;
   padding: 0 var(--pad);
-  transition: background .4s var(--ease), box-shadow .4s var(--ease), height .4s var(--ease);
+  transition: background-color .4s var(--ease), box-shadow .4s var(--ease), height .4s var(--ease);
 }
+/* Без backdrop-filter: размытие фона под фиксированной шапкой пересчитывается каждый кадр прокрутки
+   и было главной причиной тормозов. Сплошной фон выглядит так же чисто и ничего не стоит. */
 .header.is-scrolled {
   height: 68px;
-  background: rgba(244, 241, 236, .86);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: var(--paper);
   box-shadow: 0 1px 0 var(--line);
 }
 .header__logo img { width: clamp(104px, 9vw, 140px); height: auto; }
@@ -236,16 +237,18 @@ h1, h2, h3, p { margin: 0; }
 .has-scenes .portfolio__counter span { color: var(--ink); }
 .has-scenes .portfolio__track {
   flex: none; margin: 0; padding: 0; overflow: visible; gap: clamp(24px, 2.4vw, 48px);
-  align-items: flex-start; will-change: transform;
+  align-items: flex-start;
 }
 .has-scenes .pcard { width: auto; max-width: none; }
 .has-scenes .pcard__img { height: min(60vh, 640px); aspect-ratio: auto; }
 .has-scenes .pcard--tall .pcard__img { width: calc(min(60vh, 640px) * .76); }
 .has-scenes .pcard--wide .pcard__img { width: calc(min(60vh, 640px) * 1.42); }
-.has-scenes .pcard__img img { transform: scale(1.18); transition: none; }   /* масштаб под параллакс внутри карточки */
-.has-scenes .pcard:hover .pcard__img img { transform: scale(1.18); }
-.has-scenes .pcard .pcard__img { transition: border-radius .5s var(--ease); }
-.has-scenes .pcard:hover .pcard__img { border-radius: 24px; }
+/* В ленте — без скругления: обрезка по скруглённым углам у движущегося фото заставляет браузер
+   перерисовывать маску каждый кадр. Масштаб фото задаёт GSAP вместе с параллаксом. */
+.has-scenes .pcard__img { border-radius: 0; }
+.has-scenes .pcard__img img { transition: none; }
+.has-scenes .pcard__name { transition: color .3s var(--ease); }
+.has-scenes .pcard:hover .pcard__name { color: var(--accent); }
 
 /* ============ Этапы работы ============ */
 /* По умолчанию — вертикальный таймлайн */
@@ -288,7 +291,7 @@ h1, h2, h3, p { margin: 0; }
   border-radius: 999px 999px 0 0; overflow: hidden;               /* кадр в арке */
   background: var(--paper);
 }
-.sshot { position: absolute; inset: 0; }
+.sshot { position: absolute; inset: 0; overflow: hidden; }   /* шторка: рамка едет вверх, фото внутри — навстречу */
 .sshot img { width: 100%; height: 100%; object-fit: cover; }
 
 .has-scenes .stages__list {
