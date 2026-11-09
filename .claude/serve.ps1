@@ -1,6 +1,8 @@
 # Простой локальный сервер для просмотра сайта: http://localhost:8080
-param([int]$Port = 8080)
+# Новая версия: -Port 8081 -Dir v2
+param([int]$Port = 8080, [string]$Dir = '')
 $root = Split-Path $PSScriptRoot -Parent
+if ($Dir) { $root = Join-Path $root $Dir }
 $types = @{
   '.html'='text/html; charset=utf-8'; '.css'='text/css'; '.js'='application/javascript'
   '.json'='application/json'; '.svg'='image/svg+xml'; '.png'='image/png'; '.jpg'='image/jpeg'
